@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+.custom {
+  width: 15rem;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+}
+
+
+/* ::placeholder{
+    padding: 10px;
+} */

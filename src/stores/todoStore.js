@@ -24,6 +24,8 @@ const useTodoStore = create((set) => ({
       set({ error: msg, isLoading: false });
     }
   },
+
+  getTask: async () => {},
 }));
 
 export default useTodoStore;

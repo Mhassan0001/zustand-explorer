@@ -11,38 +11,57 @@ const Todo = () => {
     await createTask(input);
     setInput("");
   };
+
   return (
-    <>
-      <div className="bg-bieg-500 h-screen ">
-        <form onSubmit={onSubmit}>
-          <div className="field pt-5">
-            <input
-              type="text"
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
-              className="border-purple-500 border"
-            />
+    <div className="bg-white min-h-screen flex flex-col items-center">
+      {/* Heading */}
+      <h1 className="text-center text-[35px] uppercase tracking-[6px] py-5">
+        Today's Goals!
+      </h1>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="bg-amber-400 "
-            >
-              {isLoading ? "Creating..." : "Add Your Task"}
-            </button>
-          </div>
-        </form>
+      {/* Form */}
+      <form onSubmit={onSubmit} className="flex flex-col items-center w-full max-w-md mt-4">
+        <input
+          type="text"
+          onChange={(e) => setInput(e.target.value)}
+          value={input}
+          className="border-purple-700 rounded-2xl custom border w-full px-4 py-2"
+          placeholder="Enter Your Task Here...."
+        />
 
-        <ul>
+        <div className="flex gap-3 mt-3">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-blue-900 rounded-2xl tracking-wide px-4 py-2 text-amber-50 cursor-pointer"
+          >
+            {isLoading ? "Creating..." : "Add Your Task"}
+          </button>
+
+          <Link
+            to="/"
+            className="bg-purple-900 rounded-2xl px-4 py-2 text-white tracking-wide inline-block"
+          >
+            Redirect
+          </Link>
+        </div>
+      </form>
+
+      {/* Task List */}
+      <div className="w-full max-w-md mt-3">
+        {error && <p className="text-red-500 py-4 text-center">{error}</p>}
+        <ul className="space-y-3">
           {tasks.map((task) => (
-            <li key={task._id}>{task.task}</li>
+            <li
+              key={task._id}
+              className="bg-pink-400 text-white rounded-2xl px-10 py-2 w-fit mx-auto"
+            >
+              {task.task}
+            </li>
           ))}
         </ul>
-
-     
-        <Link to="/">Counter</Link>
       </div>
-    </>
+    </div>
   );
 };
 
