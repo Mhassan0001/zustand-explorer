@@ -3,6 +3,7 @@ import App from "../App";
 import Counter from "../components/Counter";
 import Todo from "../components/Todo";
 import Login from "../components/Login";
+import ProtectedRoute from "../components/ProtectedRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,9 +16,12 @@ const router = createBrowserRouter([
 
       {
         path: "/todo",
-        element: <Todo />,
+        element: (
+          <ProtectedRoute>
+            <Todo />
+          </ProtectedRoute>
+        ),
       },
-
 
       {
         path: "/login",
