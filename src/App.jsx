@@ -6,6 +6,7 @@ const App = () => {
   const { checkAuth } = useAuthStore();
 
   useEffect(() => {
+    console.log("CHECK AUTH RUN");
     checkAuth();
   }, [checkAuth]);
 
