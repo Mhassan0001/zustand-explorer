@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 import { create } from "zustand";
 
 const useTodoStore = create((set) => ({
@@ -9,9 +9,12 @@ const useTodoStore = create((set) => ({
   createTask: async (taskText) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post("http://localhost:9000/todo/create", {
-        task: taskText,
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:9000/todo/create",
+        {
+          task: taskText,
+        },
+      );
 
       const newTask = response.data.data;
 
@@ -25,7 +28,18 @@ const useTodoStore = create((set) => ({
     }
   },
 
-  getTask: async () => {},
+  getTask: async () => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axiosInstance.get("/todo/get");
+      const allTask = response.data.data;
+      set({ tasks: allTask, isLoading: false });
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message;
+      set({ error: msg, isLoading: false });
+    }
+  },
 }));
 
 export default useTodoStore;
