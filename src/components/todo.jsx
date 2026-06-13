@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import useTodoStore from "../stores/todoStore";
 import useAuthStore from "../stores/useAuthStore";
 import { Link } from "react-router-dom";
+import { MdOutlineLogout } from "react-icons/md";
 
 const Todo = () => {
   const [input, setInput] = useState("");
   const { isLoading, error, tasks, createTask, getTask } = useTodoStore();
-  const { user } = useAuthStore();
+  const { user,logout } = useAuthStore();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ const Todo = () => {
     <>
       
       <div className="bg-white min-h-screen flex flex-col items-center">
+        <p onClick={logout}><MdOutlineLogout/></p>
         <h1 className="text-right ml-auto pr-10 text-[20px] pt-5"> Hi! <span className="font-bold">{user.firstName}</span>  👋</h1>
         <h1 className="text-center text-[35px] uppercase tracking-[6px] py-5">
           Today's Goals!
