@@ -1,10 +1,14 @@
 import axiosInstance from "../services/axiosInstance";
 import { create } from "zustand";
 
+//?======================================================
+
 const useAuthStore = create((set) => ({
   user: null,
   error: null,
   isLoading: true,
+
+  //?======================================================
 
   login: async (email, password) => {
     set({ isLoading: true, error: null });
@@ -33,12 +37,15 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  //?======================================================
+
   checkAuth: async () => {
     set({
       isLoading: true,
       error: null,
     });
     try {
+      console.log("CHECK AUTH CALLED");
       const response = await axiosInstance.get("/auth/me");
       console.log("GET ME RESPONSE:", response.data);
       set({
@@ -46,15 +53,24 @@ const useAuthStore = create((set) => ({
         isLoading: false,
       });
     } catch (error) {
+      if (error.response?.status === 401) {
+        set({
+          user: null,
+          isLoading: false,
+          error: null,
+        });
+        return;
+      }
       const msg = error.response?.data?.msg || error.message;
       set({
         error: msg,
         isLoading: false,
         user: null,
       });
-      return false;
     }
   },
+
+  //?======================================================
 
   logout: async () => {
     set({ isLoading: true, error: null });
@@ -65,7 +81,7 @@ const useAuthStore = create((set) => ({
       set({
         user: null,
         error: null,
-        isLoading:false
+        isLoading: false,
       });
     } catch (error) {
       const msg = error.response?.data?.msg || error.message;
