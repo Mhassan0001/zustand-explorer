@@ -40,6 +40,17 @@ const useTodoStore = create((set) => ({
       set({ error: msg, isLoading: false });
     }
   },
+
+  remove: async (id) => {
+    set({ isLoading: true, error: null });
+    try {
+      await axiosInstance.delete(`/todo/delete/${id}`);
+      set({ isLoading: false, error: null });
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message;
+      set({ error: msg, isLoading: false });
+    }
+  },
 }));
 
 export default useTodoStore;

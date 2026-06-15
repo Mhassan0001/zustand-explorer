@@ -6,8 +6,9 @@ import { MdOutlineLogout } from "react-icons/md";
 
 const Todo = () => {
   const [input, setInput] = useState("");
-  const { isLoading, error, tasks, createTask, getTask } = useTodoStore();
-  const { user,logout } = useAuthStore();
+  const { isLoading, error, tasks, createTask, getTask, remove } =
+    useTodoStore();
+  const { user, logout } = useAuthStore();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +23,14 @@ const Todo = () => {
 
   return (
     <>
-      
       <div className="bg-white min-h-screen flex flex-col items-center">
-        <p onClick={logout}><MdOutlineLogout/></p>
-        <h1 className="text-right ml-auto pr-10 text-[20px] pt-5"> Hi! <span className="font-bold">{user.firstName}</span>  👋</h1>
+        <p className="mr-auto pl-6 pt-3" onClick={logout}>
+          <MdOutlineLogout size={30} />
+        </p>
+        <h1 className="text-right ml-auto pr-10 text-[20px] pt-5">
+          {" "}
+          Hi! <span className="font-bold">{user.firstName}</span> 👋
+        </h1>
         <h1 className="text-center text-[35px] uppercase tracking-[6px] py-5">
           Today's Goals!
         </h1>
@@ -61,16 +66,20 @@ const Todo = () => {
           </div>
         </form>
 
-        {/* Task List */}
         <div className="w-full max-w-md mt-3">
           {error && <p className="text-red-500 py-4 text-center">{error}</p>}
           <ul className="space-y-3">
             {tasks.map((task) => (
-              <li
-                key={task._id}
-                className="bg-pink-400 text-white rounded-2xl px-10 py-2 w-fit mx-auto"
-              >
-                {task.task}
+              <li key={task._id} className=" py-2 w-fit mx-auto">
+                <span className="bg-pink-400 px-10 py-2 text-white rounded-2xl ">
+                  {task.task}
+                </span>
+                <button
+                  onClick={() => remove(task._id)}
+                  className="bg-red-500 text-white py-2  rounded-2xl px-2"
+                >
+                  Remove
+                </button>
               </li>
             ))}
           </ul>
