@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import axiosInstance from "../services/axiosInstance";
 import { create } from "zustand";
 
@@ -45,7 +46,12 @@ const useTodoStore = create((set) => ({
     set({ isLoading: true, error: null });
     try {
       await axiosInstance.delete(`/todo/delete/${id}`);
-      set({ isLoading: false, error: null });
+      set((state) => ({
+        tasks: state.tasks.filter((task) => task._id !== id),
+        isLoading: false,
+      }));
+
+      toast.success("Deleted Successfully");
     } catch (err) {
       const msg = err.response?.data?.message || err.message;
       set({ error: msg, isLoading: false });

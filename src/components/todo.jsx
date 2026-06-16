@@ -3,6 +3,7 @@ import useTodoStore from "../stores/todoStore";
 import useAuthStore from "../stores/useAuthStore";
 import { Link } from "react-router-dom";
 import { MdOutlineLogout } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 const Todo = () => {
   const [input, setInput] = useState("");
@@ -44,7 +45,7 @@ const Todo = () => {
             type="text"
             onChange={(e) => setInput(e.target.value)}
             value={input}
-            className="border-purple-700 rounded-2xl custom border w-full px-4 py-2"
+            className="border-black rounded-2xl custom border-2  px-4 py-2"
             placeholder="Enter Your Task Here...."
           />
 
@@ -74,12 +75,13 @@ const Todo = () => {
                 <span className="bg-pink-400 px-10 py-2 text-white rounded-2xl ">
                   {task.task}
                 </span>
-                <button
+                <span className="pl-3">
+                <button 
                   onClick={() => remove(task._id)}
-                  className="bg-red-500 text-white py-2  rounded-2xl px-2"
+                  className="bg-red-500 text-white py-2  rounded-[10px] px-2"
                 >
-                  Remove
-                </button>
+                  <MdDelete />
+                </button></span>
               </li>
             ))}
           </ul>
