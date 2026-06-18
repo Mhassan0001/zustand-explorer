@@ -1,5 +1,6 @@
 import axiosInstance from "../services/axiosInstance";
 import { create } from "zustand";
+import { toast } from "sonner";
 
 //?======================================================
 
@@ -29,6 +30,7 @@ const useAuthStore = create((set) => ({
       });
 
       set({ user: response.data.data, isLoading: false });
+      toast.success(response.data.msg);
       return true;
     } catch (error) {
       const msg = error.response?.data?.msg || error.message;
@@ -83,6 +85,8 @@ const useAuthStore = create((set) => ({
         error: null,
         isLoading: false,
       });
+
+      toast.success("Logout Successfully...");
     } catch (error) {
       const msg = error.response?.data?.msg || error.message;
 

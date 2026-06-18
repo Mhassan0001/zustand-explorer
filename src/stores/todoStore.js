@@ -23,6 +23,8 @@ const useTodoStore = create((set) => ({
         tasks: [newTask, ...state.tasks],
         isLoading: false,
       }));
+
+      toast.success('New Task Created Successfully....')
     } catch (err) {
       const msg = err.response?.data?.message || err.message;
       set({ error: msg, isLoading: false });
