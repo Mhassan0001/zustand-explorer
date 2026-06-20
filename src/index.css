@@ -25,5 +25,9 @@
 
 .h{
 
+  height: 10rem;
+}
+
+.h-custom{
   height: 2rem;
 }

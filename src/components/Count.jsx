@@ -6,22 +6,35 @@ import { MdDeleteForever } from "react-icons/md";
 
 const Count = () => {
   const { reset, count, increment, decrement } = useCounterStore();
-  const { user ,isLoading } = useAuthStore;
+  const { user, isLoading } = useAuthStore();
   if (isLoading) {
     return <p className="text-center text-xl text-red-400">Loading user...</p>;
   }
   return (
     <>
-      <div className="grid grid-cols-10 h-screen px-10  bg-black ">
-        <h1 className="text-white">{user?.firstName}</h1>
+      <p className="text-white bg-black tracking-[2px] text-end capitalize pr-10 pt-4 text-2xl h-custom select-none">
+        Hi!{" "}
+        <span className="font-bold">
+          {" "}
+          {user?.firstName} {user?.lastName}
+        </span>{" "}
+        👋
+      </p>
+
+
+      <div className="grid grid-cols-2 bg-black text-white">
+
+      </div>
+
+      <div className="grid grid-cols-3   h-screen px-10  bg-black ">
         <div
-          className="col-span-1 cursor-pointer grid justify-items-center items-center  "
+          className="col-span-1  cursor-pointer grid justify-items-center items-center  "
           onClick={increment}
         >
           <IoMdAdd color="white" size={70} />
         </div>
 
-        <div className="col-span-8 text-green-500  grid justify-items-center items-center text-[15rem] ">
+        <div className="col-span-1  text-green-500  grid place-items-center text-[15rem] select-none">
           <div className="">{count}</div>
         </div>
 
@@ -32,7 +45,7 @@ const Count = () => {
           <IoMdRemove color="white" size={70} />
         </div>
 
-        <div className="grid col-span-10 place-items-center">
+        <div className="row-start-2 h-2 col-start-2 grid  place-items-center">
           <div
             className="text-[1rem] place-items-center  cursor-pointer"
             onClick={reset}
