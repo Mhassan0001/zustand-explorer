@@ -31,7 +31,11 @@ const router = createBrowserRouter([
 
       {
         path: "/count",
-        element: <Count />,
+        element: (
+          <ProtectedRoute>
+            <Count />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
