@@ -7,6 +7,8 @@ const useTodoStore = create((set) => ({
   isLoading: false,
   error: null,
 
+  //? ===================================================
+
   createTask: async (taskText) => {
     set({ isLoading: true, error: null });
     try {
@@ -24,12 +26,14 @@ const useTodoStore = create((set) => ({
         isLoading: false,
       }));
 
-      toast.success('New Task Created Successfully....')
+      toast.success("New Task Created Successfully....");
     } catch (err) {
       const msg = err.response?.data?.message || err.message;
       set({ error: msg, isLoading: false });
     }
   },
+
+  //? ===================================================
 
   getTask: async () => {
     set({ isLoading: true, error: null });
@@ -43,6 +47,8 @@ const useTodoStore = create((set) => ({
       set({ error: msg, isLoading: false });
     }
   },
+
+  //? ===================================================
 
   remove: async (id) => {
     set({ isLoading: true, error: null });
@@ -59,6 +65,32 @@ const useTodoStore = create((set) => ({
       set({ error: msg, isLoading: false });
     }
   },
+
+  //? ===================================================
+
+  update: async (id, taskUpdate) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axiosInstance.patch(`/todo/update/${id}`, {
+        task: taskUpdate,
+      });
+
+      const updatedTask = response.data.data;
+
+      set((state) => ({
+        tasks: state.tasks.map((task) => {
+          return task._id === id ? updatedTask : task;
+        }),
+        isLoading: false,
+      }));
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message;
+      set({ error: msg, isLoading: false });
+    }
+  },
+
+  //? ===================================================
 }));
 
 export default useTodoStore;
