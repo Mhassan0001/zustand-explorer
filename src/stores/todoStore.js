@@ -84,6 +84,8 @@ const useTodoStore = create((set) => ({
         }),
         isLoading: false,
       }));
+
+      toast.success('Task Updated Successfully....')
     } catch (err) {
       const msg = err.response?.data?.message || err.message;
       set({ error: msg, isLoading: false });

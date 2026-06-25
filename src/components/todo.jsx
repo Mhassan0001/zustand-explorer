@@ -45,9 +45,8 @@ const Todo = () => {
         <p className="mr-auto pl-6 pt-3" onClick={logout}>
           <MdOutlineLogout size={30} />
         </p>
-        <h1 className="text-right ml-auto pr-10 text-[20px] pt-5">
-          {" "}
-          Hi! <span className="font-bold">{user.firstName}</span> 👋
+        <h1 className="text-right text-2xl ml-auto pr-10  pt-5">
+          Hi! <span className="font-bold text-2xl capitalize text-purple-700">{user.firstName} {user.lastName }</span> 👋
         </h1>
         <h1 className="text-center text-[35px] uppercase tracking-[6px] py-5">
           Today's Goals!
@@ -69,16 +68,16 @@ const Todo = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-blue-900 rounded-2xl tracking-wide px-4 py-2 text-amber-50 cursor-pointer"
+              className="bg-blue-900  rounded-2xl tracking-[2px] px-4 py-2 text-amber-50 cursor-pointer"
             >
               {isLoading ? "Creating..." : "Add Your Task"}
             </button>
 
             <Link
               to="/count"
-              className="bg-purple-900 rounded-2xl px-4 py-2 text-white tracking-wide inline-block"
+              className="bg-purple-900 rounded-2xl px-4 py-2 text-white tracking-[2px] inline-block"
             >
-              Redirect
+              Count
             </Link>
           </div>
         </form>
@@ -101,7 +100,7 @@ const Todo = () => {
 
                     <span className="pl-1">
                       <button
-                        className="bg-green-500 text-white px-3 py-2 rounded-2xl"
+                        className="bg-green-500 cursor-pointer text-white px-3 py-2 rounded-2xl"
                         onClick={() => handleUpdate(task._id)}
                       >
                         save
