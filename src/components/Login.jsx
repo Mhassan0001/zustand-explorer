@@ -1,24 +1,20 @@
-import { useState } from "react";
 import useAuthStore from "../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 const Login = () => {
   const { login, error, isLoading } = useAuthStore();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+
   const navigate = useNavigate();
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const success = await login(formData.email, formData.password);
+  const { register, handleSubmit } = useForm();
 
+  const onSubmit = async (data) => {
+    const success = await login(data.email, data.password);
+    
     if (success) {
       navigate("/todo");
     }
+
   };
   return (
     <>
@@ -27,7 +23,7 @@ const Login = () => {
           Please ! Login Here....
         </h1>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="w-125 rounded-[30px] h-88 bg-[#1A1A1E] s">
             <p className="text-[25px] tracking-[3px] text-amber-100 pt-11 text-center">
               Welcome Back!....
@@ -37,9 +33,7 @@ const Login = () => {
             </p>
             <p className="text-center pt-5 py-3">
               <input
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
+                {...register("email")}
                 placeholder="Enter Your Email..."
                 type="email"
                 className="  bg-[#0A0A0C] h-12 w-70 text-amber-100  rounded-[0.8rem] pl-2 "
@@ -48,9 +42,7 @@ const Login = () => {
             <p className="text-center">
               <input
                 placeholder="Enter Your Password..."
-                name="password"
-                onChange={handleChange}
-                value={formData.password}
+                {...register("password")}
                 type="password"
                 className="  h-12 w-70 bg-[#0A0A0C]  text-amber-100  rounded-[0.8rem] pl-2 "
               />
