@@ -14,15 +14,6 @@ const useAuthStore = create((set) => ({
   login: async (email, password) => {
     set({ isLoading: true, error: null });
 
-    if (!email || !password) {
-      const errorMessage = "Email & password are Required";
-      set({
-        error: errorMessage,
-        isLoading: false,
-      });
-      return false;
-    }
-
     try {
       const response = await axiosInstance.post("/auth/login", {
         email,
@@ -35,6 +26,7 @@ const useAuthStore = create((set) => ({
     } catch (error) {
       const msg = error.response?.data?.msg || error.message;
       set({ error: msg, isLoading: false, user: null });
+      toast.error(msg);
       return false;
     }
   },
@@ -69,6 +61,7 @@ const useAuthStore = create((set) => ({
         isLoading: false,
         user: null,
       });
+      toast.error(msg);
     }
   },
 
@@ -94,7 +87,7 @@ const useAuthStore = create((set) => ({
         isLoading: false,
         error: msg,
       });
-
+      toast.error(msg);
       return false;
     }
   },

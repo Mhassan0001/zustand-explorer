@@ -1,20 +1,27 @@
 import useAuthStore from "../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "../schemas/authSchemas";
 const Login = () => {
-  const { login, error, isLoading } = useAuthStore();
+  const { login,  isLoading } = useAuthStore();
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
 
   const onSubmit = async (data) => {
     const success = await login(data.email, data.password);
-    
+
     if (success) {
       navigate("/todo");
     }
-
   };
   return (
     <>
@@ -38,7 +45,13 @@ const Login = () => {
                 type="email"
                 className="  bg-[#0A0A0C] h-12 w-70 text-amber-100  rounded-[0.8rem] pl-2 "
               />
+              {errors.email && (
+                <p className="text-red-500 text-center">
+                  {errors.email.message}
+                </p>
+              )}
             </p>
+
             <p className="text-center">
               <input
                 placeholder="Enter Your Password..."
@@ -46,9 +59,14 @@ const Login = () => {
                 type="password"
                 className="  h-12 w-70 bg-[#0A0A0C]  text-amber-100  rounded-[0.8rem] pl-2 "
               />
+              {errors.password && (
+                <p className="text-red-500 text-center">
+                  {errors.password.message}
+                </p>
+              )}
             </p>
 
-            {error && <p className="text-red-600 text-center">{error}</p>}
+            {/* {error && <p className="text-red-600 text-center">{error}</p>} */}
 
             <p className="text-center pt-5  ">
               <button
